@@ -128,3 +128,6 @@ dist
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
+
+# secrets.js file (API KEY)
+assets/js/secrets.js

@@ -1,0 +1,19 @@
+{
+  "name": "a-stream",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/yesiddn/a-stream.git"
+  },
+  "author": "@yesiddn <yesidrodriguez305@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/yesiddn/a-stream/issues"
+  },
+  "homepage": "https://github.com/yesiddn/a-stream#readme"
+}
