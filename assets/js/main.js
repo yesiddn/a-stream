@@ -1,8 +1,17 @@
+// Instancia de axios para usarla en toda la app
+const api = axios.create({
+  baseURL: 'https://api.themoviedb.org/3',
+  headers: {
+    'Content-Type': 'application/json;charset=utf-8',
+  },
+  params: {
+    api_key: API_KEY,
+    language: 'es',
+  },
+});
+
 async function getTrendingMoviesPreview() {
-  const res = await fetch(
-    `https://api.themoviedb.org/3/trending/movie/day?api_key=${API_KEY}`
-  );
-  const data = await res.json();
+  const { data } = await api(`/trending/movie/day`);
 
   const movies = data.results;
   movies.forEach((movie) => {
@@ -27,10 +36,7 @@ async function getTrendingMoviesPreview() {
 }
 
 async function getCategoriesPreview() {
-  const res = await fetch(
-    `https://api.themoviedb.org/3/genre/movie/list?api_key=${API_KEY}`
-  );
-  const data = await res.json();
+  const { data } = await api(`/genre/movie/list`);
 
   const categories = data.genres;
   categories.forEach((category) => {
