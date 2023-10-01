@@ -112,4 +112,11 @@ function categoryPage() {
   categoriesPreviewSection.classList.add('inactive');
   genericSection.classList.remove('inactive');
   movieDetailSection.classList.add('inactive');
+
+  const [_, categoryData] = decodeURI(location.hash).split('='); // ['#category=', 'id-name']
+  const [categoryId, categoryName] = categoryData.split('-'); // ['id', 'name']
+
+  headerCategoryTitle.innerHTML = categoryName;
+
+  getMoviesByCategory(categoryId);
 }
