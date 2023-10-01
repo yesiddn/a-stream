@@ -26,6 +26,20 @@ function navigator() {
   } else {
     homePage();
   }
+
+  document.body.scrollTop = 0; // no funciona en algunos navegadores por la guerra de navegadores :(
+  document.documentElement.scrollTop = 0;
+
+  // scroll suave
+  // function smoothscroll() {
+  //   const currentScroll =
+  //     document.documentElement.scrollTop || document.body.scrollTop;
+  //   if (currentScroll > 0) {
+  //     window.requestAnimationFrame(smoothscroll);
+  //     window.scrollTo(0, currentScroll - currentScroll / 5);
+  //   }
+  // }
+  // smoothscroll();
 }
 
 function homePage() {
