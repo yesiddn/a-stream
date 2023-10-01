@@ -1,6 +1,6 @@
 searchFormBtn.addEventListener('click', (e) => {
   e.preventDefault();
-  location.hash = 'search=';
+  location.hash = `search=${searchFormInput.value.trim()}`;
 });
 
 trendingBtn.addEventListener('click', () => {
@@ -8,7 +8,7 @@ trendingBtn.addEventListener('click', () => {
 });
 
 arrowBtn.addEventListener('click', () => {
-  location.hash = 'home';
+  location.hash = window.history.back();
 });
 
 window.addEventListener('load', navigator, false);
@@ -86,13 +86,16 @@ function searchPage() {
   arrowBtn.classList.remove('inactive');
   arrowBtn.classList.remove('header-arrow--white');
   headerTitle.classList.add('inactive');
-  headerCategoryTitle.classList.remove('inactive');
+  headerCategoryTitle.classList.add('inactive');
   searchForm.classList.remove('inactive');
 
   trendingPreviewSection.classList.add('inactive');
   categoriesPreviewSection.classList.add('inactive');
   genericSection.classList.remove('inactive');
   movieDetailSection.classList.add('inactive');
+
+  const [_, searchQuery] = decodeURI(location.hash).split('='); // ['#search=', 'query']
+  getMoviesBySearch(searchQuery)
 }
 
 function movieDetailsPage() {
