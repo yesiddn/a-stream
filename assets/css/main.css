@@ -115,6 +115,27 @@ footer {
   cursor: pointer;
 }
 
+.movie-container--loading {
+  background: var(--purple-light-2);
+  border-radius: 8px;
+  height: 225px;
+  min-height: 225px;
+  max-height: 225px;
+  width: 150px;
+  min-width: 150px;
+  max-width: 150px;
+  margin-bottom: 15px;
+  animation: loading-skeleton infinite 1.5s;
+}
+
+.movie-container--loading:nth-child(2) {
+  animation-delay: .2s;
+}
+
+.movie-container--loading:nth-child(3) {
+  animation-delay: .4s;
+}
+
 .movie-img {
   border-radius: 8px;
 }
@@ -128,6 +149,23 @@ footer {
   flex-wrap: wrap;
 }
 
+.category-container--loading {
+  background: var(--purple-light-2);
+  border-radius: 8px;
+  height: 25px;
+  min-height: 25px;
+  max-height: 25px;
+  width: 150px;
+  min-width: 150px;
+  max-width: 150px;
+  margin-bottom: 15px;
+  animation: loading-skeleton infinite 1.5s;
+}
+
+.category-container--loading:nth-child(2) {
+  animation-delay: .2s;
+}
+
 
 /* Header */
 .header-container {
@@ -135,8 +173,8 @@ footer {
 }
 
 .header-container--long {
-  /* background-image: url('https://pics.filmaffinity.com/Deadpool-777527803-large.jpg'); */
-  /* background: linear-gradient(180deg, rgba(0, 0, 0, 0.35) 19.27%, rgba(0, 0, 0, 0) 29.17%), url(https://pics.filmaffinity.com/Deadpool-777527803-large.jpg); */
+  background-image: url('https://pics.filmaffinity.com/Deadpool-777527803-large.jpg');
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.35) 19.27%, rgba(0, 0, 0, 0) 29.17%), url(https://pics.filmaffinity.com/Deadpool-777527803-large.jpg);
   background-size: cover !important;
   height: 480px;
   position: fixed;
@@ -395,11 +433,21 @@ footer {
   white-space: nowrap;
   width: calc(100vw - 24px);
   padding-bottom: 16px;
+  max-height: 225px;
 }
 
 .relatedMovies-scrollContainer .movie-container {
   display: inline-block;
   margin-right: 8px;
+}
+
+.relatedMovies-scrollContainer .movie-container--loading {
+  width: 125px;
+  min-width: 125px;
+  max-width: 125px;
+  height: 187.5px;
+  min-height: 187.5px;
+  max-height: 187.5px;
 }
 
 .relatedMovies-scrollContainer .movie-img {
@@ -427,4 +475,18 @@ footer {
 /* Navigation */
 .inactive {
   display: none;
+}
+
+
+/* Animations */
+@keyframes loading-skeleton {
+
+  0%,
+  100% {
+    opacity: 100%;
+  }
+
+  50% {
+    opacity: 0%;
+  }
 }
