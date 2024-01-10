@@ -375,6 +375,7 @@ footer {
 .genericList-container .movie-container {
   display: inline-block;
   width: 47.5%;
+  min-height: 280px;
 }
 
 .genericList-container .movie-img {
