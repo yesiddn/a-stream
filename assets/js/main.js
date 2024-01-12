@@ -20,9 +20,10 @@ const lazyLoader = new IntersectionObserver((entries) => {
   });
 }); // callback, options | si no se pasan las opciones se observa todo el html
 
-function createMovies(movies, container, lazy = true) {
+function createMovies(movies, container, { lazy = true, clean = true } = {}) {
   // want lazy or not?
-  container.innerHTML = '';
+
+  if (clean) container.innerHTML = '';
   movies.forEach((movie) => {
     const movieContainer = document.createElement('div');
     movieContainer.classList.add('movie-container');
@@ -119,6 +120,40 @@ async function getTrendingMovies() {
   const movies = data.results;
 
   createMovies(movies, genericSection);
+  // const btnLoadMore = document.createElement('button');
+  // btnLoadMore.innerText = 'Cargar más';
+  // btnLoadMore.addEventListener('click', () => {
+  //   btnLoadMore.remove();
+  //   getPaginatedTrendingMovies();
+  // });
+  // genericSection.appendChild(btnLoadMore);
+}
+
+async function getPaginatedTrendingMovies() {
+  const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
+
+  const scrollIsBottom = scrollTop + clientHeight >= scrollHeight - 10;
+
+  if (scrollIsBottom) {
+    page++;
+
+    const { data } = await api(`/trending/movie/day`, {
+      params: {
+        page,
+      },
+    });
+    const movies = data.results;
+
+    createMovies(movies, genericSection, { clean: false });
+  }
+
+  // const btnLoadMore = document.createElement('button');
+  // btnLoadMore.innerText = 'Cargar más';
+  // btnLoadMore.addEventListener('click', () => {
+  //   btnLoadMore.remove();
+  //   getPaginatedTrendingMovies();
+  // });
+  // genericSection.appendChild(btnLoadMore);
 }
 
 async function getMovieById(id) {

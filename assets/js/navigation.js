@@ -1,3 +1,6 @@
+let page = 1;
+let infiniteScroll;
+
 window.addEventListener(
   'DOMContentLoaded',
   () => {
@@ -7,7 +10,6 @@ window.addEventListener(
   },
   false
 );
-
 searchFormBtn.addEventListener('click', (e) => {
   e.preventDefault();
   location.hash = `search=${searchFormInput.value.trim()}`;
@@ -28,8 +30,14 @@ arrowBtn.addEventListener('click', () => {
 
 window.addEventListener('load', navigator, false);
 window.addEventListener('hashchange', navigator, false);
+// window.addEventListener('scroll', infiniteScroll, false);
 
 function navigator() {
+  // if (infiniteScroll) {
+  //   window.removeEventListener('scroll', infiniteScroll, { passive: false });
+  //   infiniteScroll = undefined;
+  // }
+
   if (location.hash.startsWith('#trends')) {
     trendsPage();
   } else if (location.hash.startsWith('#search=')) {
@@ -46,7 +54,11 @@ function navigator() {
   document.documentElement.scrollTop = 0;
   relatedMoviesContainer.scrollLeft = 0;
 
-  // scroll suave
+  if (infiniteScroll) {
+    window.addEventListener('scroll', infiniteScroll, false);
+  }
+
+  // scroll suave, para que no se vea tan brusco el cambio de página si se está en la parte de abajo
   // function smoothscroll() {
   //   const currentScroll =
   //     document.documentElement.scrollTop || document.body.scrollTop;
@@ -96,6 +108,8 @@ function trendsPage() {
   headerCategoryTitle.innerHTML = 'Tendencias';
 
   getTrendingMovies();
+
+  infiniteScroll = getPaginatedTrendingMovies;
 }
 
 function searchPage() {
