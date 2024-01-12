@@ -37,6 +37,13 @@ function createMovies(movies, container, lazy = true) {
       lazy ? 'data-img' : 'src',
       `https://image.tmdb.org/t/p/w300/${movie.poster_path}`
     );
+    movieImg.addEventListener('error', () => {
+      movieImg.setAttribute(
+        'src',
+        // imagen tipo placeholder -> tamaño 300x450 -> color de fondo 5c218a -> texto blanco -> tamaño de texto 20px
+        `https://via.placeholder.com/300x450/5c218a/ffffff?text=${movie.title}&fontsize=32`
+      );
+    });
 
     if (lazy) lazyLoader.observe(movieImg);
 
