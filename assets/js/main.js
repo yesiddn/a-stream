@@ -1,3 +1,4 @@
+// ---- Data ----
 // Instancia de axios para usarla en toda la app
 const api = axios.create({
   baseURL: 'https://api.themoviedb.org/3',
@@ -10,7 +11,25 @@ const api = axios.create({
   },
 });
 
-// Helpers o utils
+function likedMoviesList() {
+  const item = JSON.parse(localStorage.getItem('liked_movies'));
+
+  return item ? item : {};
+}
+
+function likeMovie(movie) {
+  const likedMovies = likedMoviesList();
+
+  if (likedMovies[movie.id]) {
+    delete likedMovies[movie.id];
+  } else {
+    likedMovies[movie.id] = movie;
+  }
+
+  localStorage.setItem('liked_movies', JSON.stringify(likedMovies));
+}
+
+// ---- Helpers o utils ----
 const lazyLoader = new IntersectionObserver((entries) => {
   // entries, observer | el observer es el mismo lazyLoader
   entries.forEach((entry) => {
@@ -51,6 +70,7 @@ function createMovies(movies, container, { lazy = true, clean = true } = {}) {
     movieBtn.addEventListener('click', (e) => {
       e.stopPropagation(); // para que no se propague el evento click al padre
       movieBtn.classList.toggle('movie-btn--liked');
+      likeMovie(movie);
     });
 
     if (lazy) lazyLoader.observe(movieImg);
@@ -81,7 +101,7 @@ function createCategories(categories, container) {
   });
 }
 
-// Llamados a la api
+// ---- Llamados a la api ----
 
 async function getTrendingMoviesPreview() {
   const { data } = await api(`/trending/movie/day`);
