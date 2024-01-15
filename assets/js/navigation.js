@@ -1,4 +1,4 @@
-let maxPage;
+let maxPages;
 let page = 1;
 let infiniteScroll;
 
@@ -34,10 +34,11 @@ window.addEventListener('hashchange', navigator, false);
 // window.addEventListener('scroll', infiniteScroll, false);
 
 function navigator() {
-  // if (infiniteScroll) {
-  //   window.removeEventListener('scroll', infiniteScroll, { passive: false });
-  //   infiniteScroll = undefined;
-  // }
+  page = 1;
+  if (infiniteScroll) {
+    window.removeEventListener('scroll', infiniteScroll, { passive: false });
+    infiniteScroll = undefined;
+  }
 
   if (location.hash.startsWith('#trends')) {
     trendsPage();
@@ -131,6 +132,8 @@ function searchPage() {
 
   const [_, searchQuery] = decodeURI(location.hash).split('='); // ['#search=', 'query']
   getMoviesBySearch(searchQuery);
+
+  infiniteScroll = getPaginatedMoviesBySearch(searchQuery); // retornando una funcion se evita que getPaginatedMoviesBySearch se ejecute inmediatamente, para ejecutarla se debe llamar como getPaginatedMoviesBySearch(searchQuery)()
 }
 
 function movieDetailsPage() {
@@ -176,4 +179,6 @@ function categoryPage() {
   headerCategoryTitle.innerHTML = categoryName;
 
   getMoviesByCategory(categoryId);
+
+  infiniteScroll = getPaginatedMoviesByCategory(categoryId);
 }

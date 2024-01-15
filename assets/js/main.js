@@ -99,6 +99,7 @@ async function getMoviesByCategory(categoryId) {
   });
 
   const movies = data.results;
+  maxPages = data.total_pages;
 
   createMovies(movies, genericSection);
 }
@@ -111,6 +112,7 @@ async function getMoviesBySearch(searchQuery) {
   });
 
   const movies = data.results;
+  maxPages = data.total_pages;
 
   createMovies(movies, genericSection);
 }
@@ -135,7 +137,7 @@ async function getPaginatedTrendingMovies() {
 
   const scrollIsBottom = scrollTop + clientHeight >= scrollHeight - 10;
   const pageIsNotMax = page < maxPages;
-  
+
   if (scrollIsBottom && pageIsNotMax) {
     page++;
 
@@ -148,14 +150,53 @@ async function getPaginatedTrendingMovies() {
 
     createMovies(movies, genericSection, { clean: false });
   }
+}
 
-  // const btnLoadMore = document.createElement('button');
-  // btnLoadMore.innerText = 'Cargar más';
-  // btnLoadMore.addEventListener('click', () => {
-  //   btnLoadMore.remove();
-  //   getPaginatedTrendingMovies();
-  // });
-  // genericSection.appendChild(btnLoadMore);
+function getPaginatedMoviesBySearch(query) {
+  return async function () {
+    const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
+
+    const scrollIsBottom = scrollTop + clientHeight >= scrollHeight - 10;
+    const pageIsNotMax = page < maxPages;
+
+    if (scrollIsBottom && pageIsNotMax) {
+      page++;
+
+      const { data } = await api(`/search/movie`, {
+        params: {
+          query,
+          page,
+        },
+      });
+      const movies = data.results;
+
+      createMovies(movies, genericSection, { clean: false });
+    }
+  };
+}
+
+function getPaginatedMoviesByCategory(categoryId) {
+  return async function () {
+    const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
+
+    const scrollIsBottom = scrollTop + clientHeight >= scrollHeight - 10;
+    const pageIsNotMax = page < maxPages;
+
+    if (scrollIsBottom && pageIsNotMax) {
+      page++;
+
+      const { data } = await api('discover/movie', {
+        params: {
+          with_genres: categoryId,
+          page,
+        },
+      });
+
+      const movies = data.results;
+
+      createMovies(movies, genericSection, { clean: false });
+    }
+  };
 }
 
 async function getMovieById(id) {
