@@ -46,9 +46,17 @@ function createMovies(movies, container, { lazy = true, clean = true } = {}) {
       );
     });
 
+    const movieBtn = document.createElement('button');
+    movieBtn.classList.add('movie-btn');
+    movieBtn.addEventListener('click', (e) => {
+      e.stopPropagation(); // para que no se propague el evento click al padre
+      movieBtn.classList.toggle('movie-btn--liked');
+    });
+
     if (lazy) lazyLoader.observe(movieImg);
 
     movieContainer.appendChild(movieImg);
+    movieContainer.appendChild(movieBtn);
     container.appendChild(movieContainer);
   });
 }
