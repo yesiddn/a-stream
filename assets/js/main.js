@@ -67,10 +67,12 @@ function createMovies(movies, container, { lazy = true, clean = true } = {}) {
 
     const movieBtn = document.createElement('button');
     movieBtn.classList.add('movie-btn');
+    likedMoviesList()[movie.id] && movieBtn.classList.add('movie-btn--liked');
     movieBtn.addEventListener('click', (e) => {
       e.stopPropagation(); // para que no se propague el evento click al padre
       movieBtn.classList.toggle('movie-btn--liked');
       likeMovie(movie);
+      getLikedMovies();
     });
 
     if (lazy) lazyLoader.observe(movieImg);
@@ -252,4 +254,12 @@ async function getReletedMoviesId(id) {
   const relatedMovies = data.results;
 
   createMovies(relatedMovies, relatedMoviesContainer);
+}
+
+function getLikedMovies() {
+  const likedMovies = likedMoviesList();
+
+  const movies = Object.values(likedMovies);
+  
+  createMovies(movies, likedMoviesListArticle);
 }
